@@ -1,0 +1,48 @@
+package pages
+
+import (
+    "client/internal/views/layouts"
+)
+
+// This is example of page using htmx and tailwind
+templ IndexPage(name string) {
+    @layouts.Base("Index") {
+        <div class="p-2 bg-gray-200 w-screen h-screen" hx-ext="response-targets">
+            <h1 class="max-w-lg text-5xl font-semibold leading-normal text-gray-900 dark:text-white">
+                Hello, {name}!
+            </h1>
+
+            <div id="success"></div>
+
+            <form
+                class="bg-white shadow-md rounded px-8 pt-6 pb-8 mt-6 mb-4 max-w-80"
+                hx-post="/send-data"
+                hx-trigger="submit"
+                hx-target-401="#error"
+                hx-target="#success"
+                hx-swap="outerHTML"
+            >
+                <div id="error" class="mb-4"></div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2" for="data">
+                        Your Data
+                    </label>
+                    <input
+                        class="appearance-none border border-2 border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        name="data"
+                        id="data"
+                        placeholder="..."
+                        required=""
+                    />
+                </div>
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit"
+                >
+                    Send data
+                </button>
+            </form>
+        </div>
+    }
+}
